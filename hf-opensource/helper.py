@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import requests
 import inflect
 from PIL import Image
+import numpy as np
+import torch
 
 def load_image_from_url(url):
     return Image.open(requests.get(url, stream=True).raw)
@@ -93,9 +95,7 @@ def ignore_warnings():
 
 ########
 
-import numpy as np
-import torch
-import matplotlib.pyplot as plt
+
 
 def show_mask(mask, ax, random_color=False):
     if random_color:
