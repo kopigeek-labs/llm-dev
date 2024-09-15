@@ -1,27 +1,26 @@
 import openai
 import os
 
-# Set up the OpenAI API key
+# Set up OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-def generate_response(prompt):
+def get_chat_completion(prompt, model="gpt-3.5-turbo"):
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # A more modern model
+            model=model,
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": prompt}
-            ],
-            max_tokens=150,
-            n=1,
-            stop=None,
-            temperature=0.7,
+            ]
         )
         return response.choices[0].message.content
     except Exception as e:
-        return f"An error occurred: {str(e)}"
+        print(f"An error occurred: {e}")
+        return None
 
 # Example usage
-user_prompt = "What is the capital of France?"
-result = generate_response(user_prompt)
-print(result)
+if __name__ == "__main__":
+    user_prompt = "Tell me a joke about programming."
+    result = get_chat_completion(user_prompt)
+    if result:
+        print("AI response:", result)
